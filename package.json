@@ -1,0 +1,22 @@
+{
+  "name": "yuerbao-dialog",
+  "version": "1.0.0",
+  "description": "this is a ui component for my party",
+  "main": "index.js",
+  "scripts": {
+    "test": "no test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dujinjin123456/popup.git"
+  },
+  "keywords": [
+    "popup"
+  ],
+  "author": "jinjin.du",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dujinjin123456/popup/issues"
+  },
+  "homepage": "https://github.com/dujinjin123456/popup#readme"
+}
