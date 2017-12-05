@@ -1,3 +1,7 @@
+'use strict'
+
+require('./index.css');
+
 class popup {
 	
 	constructor(options){
@@ -16,22 +20,32 @@ class popup {
 			btns: []
 		};
 		this.config = $.extend(true, {}, defaultOptions, options);
-		this.$dialog = null;
+		this.$popup = null;
 		this.visibility = false;
-		this.init();
+		this._init();
 	}
 
-	insertHTML() {
+	_insertHTML() {
 		var imageHtmlArr = [],
+			contentHtml = '',
 			html = '';
 
-		this.config.content.images.forEach(function({src, title}){
-			imageHtmlArr.push(`<img src="${src}" title="${title}">`);
-		});
+		if ( typeof this.config.content === 'string' ) {
+			contentHtml = this.config.content;
+		} else {
+			this.config.content.images.forEach(function({src, title}){
+				imageHtmlArr.push(`<img src="${src}" title="${title}">`);
+			});
+			contentHtml = `
+				${this.config.content.big ? `<div class="big-text">${this.config.content.big}</div>` : ''}
+            	${this.config.content.small ? `<div class="small-text">${this.config.content.small}</div>` : ''}
+            	${imageHtmlArr.length ? `<div class="img-outer">${imageHtmlArr.join('')}</div>` : ''}
+            `;
+		}
 
 		html = 
-		`<div class="dialog">
-		    <div class="dialog-inner">
+		`<div class="popup">
+		    <div class="popup-inner">
 		        <div class="header">
 		            ${ this.config.title.text ? 
 			            	`<h1 class="title ${this.config.title.style || 'normal'}">
@@ -49,10 +63,7 @@ class popup {
 		        ${this.config.desc ? `<p class="baby-desc">${this.config.desc}</p>`: ''}
 		        <div class="content">
 		            <div class="content-inner">
-		            	${this.config.content.big ? `<div class="big-text">${this.config.content.big}</div>` : ''}
-		            	${this.config.content.small ? `<div class="small-text">${this.config.content.small}</div>` : ''}
-		            	${imageHtmlArr.length ? `<div class="img-outer">${imageHtmlArr.join('')}</div>` : ''}
-		            	${this.config.content.placeholder ? `<div class="input-outer"><input type="text" placeholder="${this.config.content.placeholder}" /></div>` : ''}
+		            	${contentHtml}
 		            </div>
 		        </div>
 		    </div>
@@ -61,54 +72,39 @@ class popup {
 			throw Error('没有这个容器--来自育儿宝popup');
 			return;
 		}
-		this.$dialog = $(html).appendTo($(this.config.container));
-		this.insertBtns();
+		this.$popup = $(html).appendTo($(this.config.container));
+		this._insertBtns();
 	}
 
-	insertBtns() {
+	_insertBtns() {
 		let _self = this;
 		let $btns = $('<div class="btns"></div>');
 		if ( this.config.btns.length ) { 
-			$btns.appendTo(this.$dialog.find('.content')); 
+			$btns.appendTo(this.$popup.find('.content')); 
 		} else {
 			return;
 		}
 
-		this.config.btns.forEach(function({text, style, click}){
+		this.config.btns.forEach(function({text, style, eventname, callback}){
 			let $btn = $(`<a href="javascript:;" class="btn ${style || 'normal'}">${text}</a>`).appendTo($btns);
-			if ( typeof click === 'function' ) {
-				$btn.on('click', click);
+			if ( typeof callback === 'function' ) {
+				$btn.on(eventname || 'click', callback);
 			} else {
-				$btn.on('click', function() {
+				$btn.on(eventname || 'click', function() {
 					_self.toggle(false);
 				});
 			}
 		});
 	}
 
-	bindEvents() {
+	_bindEvents() {
 		var _self = this;
-		this.$dialog.on('click', '.close-btn, .btn.reset', function() {
-			_self.hidden();
+		this.$popup.on('click', '.close-btn, .btn.reset', function() {
+			_self.hide();
 		});
 	}
 
-	toggle() {
-		this.visibility = !this.visibility;
-		this.$dialog.toggleClass('show', this.visibility);
-	}
-
-	show() {
-		this.visibility = true;
-		this.$dialog.toggleClass('show', this.visibility);
-	}
-
-	hidden() {
-		this.visibility = false;
-		this.$dialog.toggleClass('show', this.visibility);
-	}
-
-	init() {
+	_init() {
 		if ( this.config.type === 'confirm' ) {
 			var finded = false;
 			this.config.btns.every(function({text, style}, index){
@@ -124,10 +120,24 @@ class popup {
 				});
 			}			
 		}
-		this.insertHTML();
-		this.bindEvents();
+		this._insertHTML();
+		this._bindEvents();
 	}
 
+	toggle() {
+		this.visibility = !this.visibility;
+		this.$popup.toggleClass('show', this.visibility);
+	}
+
+	show() {
+		this.visibility = true;
+		this.$popup.toggleClass('show', this.visibility);
+	}
+
+	hide() {
+		this.visibility = false;
+		this.$popup.toggleClass('show', this.visibility);
+	}
 }
 
 module.exports = popup;

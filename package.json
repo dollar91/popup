@@ -1,22 +1,50 @@
 {
-  "name": "yuerbao-dialog",
-  "version": "1.0.0",
-  "description": "this is a ui component for my party",
-  "main": "index.js",
-  "scripts": {
-    "test": "no test"
+  "_from": "loveshine_popup",
+  "_id": "loveshine_popup@1.0.2",
+  "_inBundle": false,
+  "_integrity": "sha512-6z12GlJ+vI1dODl8sZihd9YqNWo6cY4glNS1p+sSouUeX0mK/feOBJyAVbcX4twgt/vNRw6GyR5cGzz1l7ZPVg==",
+  "_location": "/loveshine_popup",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "loveshine_popup",
+    "name": "loveshine_popup",
+    "escapedName": "loveshine_popup",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
   },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/loveshine_popup/-/loveshine_popup-1.0.0.tgz",
+  "_shasum": "32c23e3595d0d9d8c8f25f82b069c193de4ee2a4",
+  "_spec": "loveshine_popup",
+  "_where": "D:\\Dollar\\yuerbao_h5",
+  "author": {
+    "name": "jinjin.du"
+  },
+  "bugs": {
+    "url": "https://github.com/dujinjin123456/popup/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "this is a ui component for my party",
+  "homepage": "https://github.com/dujinjin123456/popup#readme",
+  "keywords": [
+    "popup"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "loveshine_popup",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dujinjin123456/popup.git"
   },
-  "keywords": [
-    "popup"
-  ],
-  "author": "jinjin.du",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/dujinjin123456/popup/issues"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "homepage": "https://github.com/dujinjin123456/popup#readme"
+  "version": "1.0.2"
 }
